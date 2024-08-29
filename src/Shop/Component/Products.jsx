@@ -32,10 +32,10 @@ function Products(props) {
             {
                 products && products.map(value => (
                     <div className="col-lg-4 col-md-4 col-sm-6 mt-40 animate__animated animate__zoomIn col_product" key={value._id}>
-                        <div className="single-product-wrap">
+                        <div className="single-product-wrap" >
                             <div className="product-image">
                                 <Link to={`/detail/${value._id}`}>
-                                    <img src={`http://localhost:8000${value.image}`} alt="Li's Product Image" />
+                                    <img src={`http://localhost:8000${value.image}`} alt="Li's Product Image" width={250} height={250}/>
                                 </Link>
                                 <span className="sticker">New</span>
                             </div>

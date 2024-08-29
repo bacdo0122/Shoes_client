@@ -19,15 +19,17 @@ function Shop(props) {
 
     //Tổng số trang
     const [totalPage, setTotalPage] = useState()
-    const [category, setCategory] = useState("");
+    const [male, set_male] = useState([])
+    const [female, set_female] = useState([])
+    const [sortBy, setSortBy] = useState('all')
     //Từng trang hiện tại
     const [pagination, setPagination] = useState({
         page: '1',
-        count: '9',
-        search: '',
+        count: '2',
         category: id
     })
 
+    const [search, setSearch] = useState('')
 
     //Hàm này dùng để thay đổi state pagination.page
     //Nó sẽ truyền xuống Component con và nhận dữ liệu từ Component con truyền lên
@@ -37,10 +39,54 @@ function Shop(props) {
         setPagination({
             page: value,
             count: pagination.count,
-            search: pagination.search,
             category: pagination.category
         })
     }
+
+    //Gọi hàm để load ra sản phẩm theo pagination dữ vào id params 
+    // useEffect(() => {
+
+    //     const fetchData = async () => {
+
+    //         // const params = {
+    //         //     page: pagination.page,
+    //         //     count: pagination.count,
+    //         //     search: pagination.search,
+    //         //     category: id
+    //         // }
+
+    //         // const query = '?' + queryString.stringify(params)
+
+    //         // const response = await Product.Get_Pagination(query)
+            
+            
+            
+    //         // Gọi API để tính tổng số trang cho từng loại sản phẩm
+    //         const params_total_page = {
+    //             page: pagination.page,
+    //             count: pagination.count,
+    //             search: pagination.search,
+    //             id_category: id,
+    //             sortBy: sortBy
+    //         }
+            
+    //         const query_total_page = '?' + queryString.stringify(params_total_page)
+            
+    //         const response_total_page = await Product.Get_Category_Product(query_total_page)
+    //         setProducts(response_total_page)
+    //         console.log("response_total_page:", response_total_page)
+
+    //         //Tính tổng số trang = tổng số sản phẩm / số lượng sản phẩm 1 trang
+    //         const totalPage = Math.ceil(parseInt(response_total_page.length) / parseInt(pagination.count))
+    //         console.log(totalPage)
+
+    //         setTotalPage(totalPage)
+
+    //     }
+
+    //     fetchData()
+
+    // }, [id, sortBy, pagination])
 
     //Gọi hàm để load ra sản phẩm theo pagination dữ vào id params 
     useEffect(() => {
@@ -50,29 +96,17 @@ function Shop(props) {
             const params = {
                 page: pagination.page,
                 count: pagination.count,
-                search: pagination.search,
-                category: id
+                category: id,
+                sortBy
             }
 
             const query = '?' + queryString.stringify(params)
 
             const response = await Product.Get_Pagination(query)
-            console.log(response)
+            console.log("response1:", response)
 
-            setProducts(response)
-
-
-            // Gọi API để tính tổng số trang cho từng loại sản phẩm
-            const params_total_page = {
-                id_category: id
-            }
-
-            const query_total_page = '?' + queryString.stringify(params_total_page)
-
-            const response_total_page = await Product.Get_Category_Product(query_total_page)
-
-            //Tính tổng số trang = tổng số sản phẩm / số lượng sản phẩm 1 trang
-            const totalPage = Math.ceil(parseInt(response_total_page.length) / parseInt(pagination.count))
+            setProducts(response.data)
+            const totalPage = Math.ceil(parseInt(response.total) / parseInt(pagination.count))
             console.log(totalPage)
 
             setTotalPage(totalPage)
@@ -81,57 +115,12 @@ function Shop(props) {
 
         fetchData()
 
-    }, [id, category])
+    }, [id, sortBy, pagination])
 
-    //Gọi hàm để load ra sản phẩm theo pagination dữ vào id params 
     useEffect(() => {
+        setPagination({...pagination, page: 1})
+    }, [id])
 
-        const fetchData = async () => {
-
-            const params = {
-                page: pagination.page,
-                count: pagination.count,
-                search: pagination.search,
-                category: id
-            }
-
-            const query = '?' + queryString.stringify(params)
-
-            const response = await Product.Get_Pagination(query)
-            console.log(response)
-
-            setProducts(response)
-
-        }
-
-        fetchData()
-
-    }, [pagination])
-
-    const [male, set_male] = useState([])
-    const [female, set_female] = useState([])
-    const [sortBy, setSortBy] = useState('all')
-
-    // useEffect(() => {
-
-    //     const fetchData = async () => {
-
-    //         const params = {
-    //             sortBy: sortBy
-    //         }
-
-    //         const query = '?' + queryString.stringify(params)
-
-    //         const response = await Product.Get_SortBy(query)
-    //         console.log(response)
-
-    //         setProducts(response)
-
-    //     }
-
-    //     fetchData()
-
-    // }, [sortBy])
 
 
     // Gọi API theo phương thức GET để load category
@@ -169,20 +158,11 @@ function Shop(props) {
 
 
     const handler_Search = (value) => {
-        console.log("Search: ", value)
-        
-        setPagination({
-            page: pagination.page,
-            count: pagination.count,
-            search: value,
-            category: pagination.category
-        })
-
+        setSearch(value);
     }
 
     const handleSortBy = (e) => {
         setSortBy(e.target.value)
-        console.log(e.target.value)
     }
 
     return (
@@ -216,11 +196,8 @@ function Shop(props) {
                                     </ul>
                                 </div>
                                 <div className="li-blog-sidebar pt-25" style={{ marginBottom: "20px" }}>
-                                <Link to={`/shop/66cf826817df17e3893ba1fd`} style={{ cursor: 'pointer' }}>
-                                Male
-                                </Link>
-                                    {/* <h4 className="li-blog-sidebar-title" onClick={() => setCategory("male")}>Male</h4> */}
-                                    {/* <ul className="li-blog-archive">
+                                    <h4 className="li-blog-sidebar-title" >Male</h4>
+                                    <ul className="li-blog-archive">
                                         {
                                             male && male.map(value => (
                                                 <li key={value._id}>
@@ -228,13 +205,11 @@ function Shop(props) {
                                                 </li>
                                             ))
                                         }
-                                    </ul> */}
+                                    </ul>
                                 </div>
                                 <div className="li-blog-sidebar">
-                                <Link to={`/shop/66cf827317df17e3893ba1fe`} style={{ cursor: 'pointer' }}>
-                                Female
-                                </Link>
-                                    {/* <ul className="li-blog-archive">
+                                <h4 className="li-blog-sidebar-title" >Female</h4>
+                                    <ul className="li-blog-archive">
                                         {
                                             female && female.map(value => (
                                                 <li key={value._id}>
@@ -242,12 +217,12 @@ function Shop(props) {
                                                 </li>
                                             ))
                                         }
-                                    </ul> */}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-9 order-1 order-lg-2">
-                            {/* <div className="shop-top-bar">
+                            <div className="shop-top-bar">
                                 <div className="product-select-box">
                                     <div className="product-short">
                                         <p>Sort By:</p>
@@ -258,7 +233,7 @@ function Shop(props) {
                                         </select>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                             <div className="shop-products-wrapper">
                                 <div className="tab-content">
                                     <div id="grid-view" className="tab-pane active" role="tabpanel">
@@ -269,7 +244,7 @@ function Shop(props) {
                                     <div className="paginatoin-area">
                                         <div className="row">
                                             <div className="col-lg-6 col-md-6">
-                                                <p>Showing 1-9 of 9 item(s)</p>
+                                                <p>Showing {pagination.count * (pagination.page - 1) + 1}-{pagination.page * (pagination.count)} of {totalPage * pagination.count } item(s)</p>
                                             </div>
                                             <Pagination pagination={pagination} handlerChangePage={handlerChangePage} totalPage={totalPage} />
                                         </div>

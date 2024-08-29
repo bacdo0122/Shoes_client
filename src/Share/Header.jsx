@@ -369,7 +369,7 @@ function Header(props) {
                                             <li className="dropdown-holder"><Link to="/">Home</Link></li>
                                             <li className="megamenu-holder"><Link to="/shop/all">Menu</Link>
                                                 <ul class="megamenu hb-megamenu">
-                                                    <li><Link to="/shop/all">Male</Link>
+                                                    <li><h4>Male</h4>
                                                         <ul>
                                                             {
                                                                 male && male.map(value => (
@@ -380,7 +380,7 @@ function Header(props) {
                                                             }
                                                         </ul>
                                                     </li>
-                                                    <li><Link to="/shop">Female</Link>
+                                                    <li><h4>Female</h4>
                                                         <ul>
                                                             {
                                                                 female && female.map(value => (
