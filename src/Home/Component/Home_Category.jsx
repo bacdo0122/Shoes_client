@@ -72,7 +72,6 @@ function Home_Category(props) {
 
     }, [])
 
-    console.log("product_category:", product_category)
     return (
         <div className="product-area pt-60 pb-50">
             <div className="container">

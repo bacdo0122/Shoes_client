@@ -13,6 +13,7 @@ import { changeCount } from '../Redux/Action/ActionCount';
 import { useDispatch, useSelector } from 'react-redux';
 import CartsLocal from '../Share/CartsLocal';
 import SaleAPI from '../API/SaleAPI';
+import Home_Gender from './Component/Home_Gender';
 
 Home.propTypes = {
 
@@ -146,9 +147,9 @@ function Home(props) {
                 </div>
             </div>
 
-            <Home_Product gender={`Male`} category={'66cf826817df17e3893ba1fd'} GET_id_modal={GET_id_modal} />
+            <Home_Gender gender={`Male`}  />
 
-            <Home_Product gender={`Female`} category={'66cf827317df17e3893ba1fe'} GET_id_modal={GET_id_modal} />
+            <Home_Gender gender={`Female`}  />
 
 
             <div className="modal fade modal-wrapper" id={id_modal} >

@@ -2,8 +2,8 @@ import axiosClient from './axiosClient'
 
 const Product = {
 
-    Get_All_Product: () => {
-        const url = '/api/Product'
+    Get_All_Product: (query) => {
+        const url = `/api/Product${query}`
         return axiosClient.get(url)
     },
 
@@ -19,6 +19,11 @@ const Product = {
 
     Get_Category_Gender: (query) => {
         const url = `/api/Product/category/gender${query}`
+        return axiosClient.get(url)
+    },
+
+    Get_Category: (query) => {
+        const url = `/api/Category${query}`
         return axiosClient.get(url)
     },
 

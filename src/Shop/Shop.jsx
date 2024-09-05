@@ -19,13 +19,14 @@ function Shop(props) {
 
     //Tổng số trang
     const [totalPage, setTotalPage] = useState()
+    const [totalProducts, setTotalProducts] = useState(0)
     const [male, set_male] = useState([])
     const [female, set_female] = useState([])
     const [sortBy, setSortBy] = useState('all')
     //Từng trang hiện tại
     const [pagination, setPagination] = useState({
         page: '1',
-        count: '2',
+        count: '9',
         category: id
     })
 
@@ -43,50 +44,7 @@ function Shop(props) {
         })
     }
 
-    //Gọi hàm để load ra sản phẩm theo pagination dữ vào id params 
-    // useEffect(() => {
-
-    //     const fetchData = async () => {
-
-    //         // const params = {
-    //         //     page: pagination.page,
-    //         //     count: pagination.count,
-    //         //     search: pagination.search,
-    //         //     category: id
-    //         // }
-
-    //         // const query = '?' + queryString.stringify(params)
-
-    //         // const response = await Product.Get_Pagination(query)
-            
-            
-            
-    //         // Gọi API để tính tổng số trang cho từng loại sản phẩm
-    //         const params_total_page = {
-    //             page: pagination.page,
-    //             count: pagination.count,
-    //             search: pagination.search,
-    //             id_category: id,
-    //             sortBy: sortBy
-    //         }
-            
-    //         const query_total_page = '?' + queryString.stringify(params_total_page)
-            
-    //         const response_total_page = await Product.Get_Category_Product(query_total_page)
-    //         setProducts(response_total_page)
-    //         console.log("response_total_page:", response_total_page)
-
-    //         //Tính tổng số trang = tổng số sản phẩm / số lượng sản phẩm 1 trang
-    //         const totalPage = Math.ceil(parseInt(response_total_page.length) / parseInt(pagination.count))
-    //         console.log(totalPage)
-
-    //         setTotalPage(totalPage)
-
-    //     }
-
-    //     fetchData()
-
-    // }, [id, sortBy, pagination])
+  
 
     //Gọi hàm để load ra sản phẩm theo pagination dữ vào id params 
     useEffect(() => {
@@ -97,17 +55,17 @@ function Shop(props) {
                 page: pagination.page,
                 count: pagination.count,
                 category: id,
-                sortBy
+                sortBy,
+                search: search,
             }
 
             const query = '?' + queryString.stringify(params)
 
             const response = await Product.Get_Pagination(query)
-            console.log("response1:", response)
-
+            console.log("response:", response)
             setProducts(response.data)
+            setTotalProducts(response.total)
             const totalPage = Math.ceil(parseInt(response.total) / parseInt(pagination.count))
-            console.log(totalPage)
 
             setTotalPage(totalPage)
 
@@ -115,7 +73,7 @@ function Shop(props) {
 
         fetchData()
 
-    }, [id, sortBy, pagination])
+    }, [id, sortBy, pagination, search])
 
     useEffect(() => {
         setPagination({...pagination, page: 1})
@@ -135,8 +93,7 @@ function Shop(props) {
 
             const query_male = '?' + queryString.stringify(params_male)
 
-            const response_male = await Product.Get_Category_Gender(query_male)
-
+            const response_male = await Product.Get_Category(query_male)
             set_male(response_male)
 
             // gender = female
@@ -146,7 +103,7 @@ function Shop(props) {
 
             const query_female = '?' + queryString.stringify(params_female)
 
-            const response_female = await Product.Get_Category_Gender(query_female)
+            const response_female = await Product.Get_Category(query_female)
 
             set_female(response_female)
 
@@ -158,13 +115,13 @@ function Shop(props) {
 
 
     const handler_Search = (value) => {
+        setPagination({...pagination, page: '1'})
         setSearch(value);
     }
 
     const handleSortBy = (e) => {
         setSortBy(e.target.value)
     }
-
     return (
         <div>
             <div className="breadcrumb-area">
@@ -195,7 +152,7 @@ function Shop(props) {
                                         <li><Link to="/shop/all" style={id === 'all' ? { cursor: 'pointer', color: '#fed700' } : { cursor: 'pointer' }}>All</Link></li>
                                     </ul>
                                 </div>
-                                <div className="li-blog-sidebar pt-25" style={{ marginBottom: "20px" }}>
+                                <div className="li-blog-sidebar pt-25 123" style={{ marginBottom: "20px" }}>
                                     <h4 className="li-blog-sidebar-title" >Male</h4>
                                     <ul className="li-blog-archive">
                                         {
@@ -244,7 +201,7 @@ function Shop(props) {
                                     <div className="paginatoin-area">
                                         <div className="row">
                                             <div className="col-lg-6 col-md-6">
-                                                <p>Showing {pagination.count * (pagination.page - 1) + 1}-{pagination.page * (pagination.count)} of {totalPage * pagination.count } item(s)</p>
+                                                <p>Showing {pagination.count * (pagination.page - 1) + 1}-{(pagination.page - 1) * (pagination.count) + products.length} of {totalProducts } item(s)</p>
                                             </div>
                                             <Pagination pagination={pagination} handlerChangePage={handlerChangePage} totalPage={totalPage} />
                                         </div>

@@ -161,8 +161,8 @@ function Header(props) {
 
             const query_male = '?' + queryString.stringify(params_male)
 
-            const response_male = await Product.Get_Category_Gender(query_male)
-
+            const response_male = await Product.Get_Category(query_male)
+            console.log("response_male:", response_male)
             set_male(response_male)
 
             // gender = female
@@ -172,8 +172,8 @@ function Header(props) {
 
             const query_female = '?' + queryString.stringify(params_female)
 
-            const response_female = await Product.Get_Category_Gender(query_female)
-
+            const response_female = await Product.Get_Category(query_female)
+            console.log("response_female:", response_female)
             set_female(response_female)
 
         }
