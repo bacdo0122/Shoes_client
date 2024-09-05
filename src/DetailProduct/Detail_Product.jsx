@@ -198,7 +198,7 @@ function Detail_Product(props) {
 
     }, [load_comment])
 
-
+    console.log("product:", product)
     return (
         <div>
             {
@@ -240,8 +240,8 @@ function Detail_Product(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li className="active">Detail</li>
+                            <li><Link to="/">Trang chủ</Link></li>
+                            <li className="active">Chi tiết</li>
                         </ul>
                     </div>
                 </div>
@@ -279,13 +279,17 @@ function Detail_Product(props) {
                                     </div>
                                     <div className="product-desc">
                                         <p>
-                                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel harum tenetur delectus nam quam assumenda? Soluta vitae tempora ratione excepturi doloremque, repudiandae ullam, eum corporis, itaque dolor aperiam enim aspernatur.
+                                            <span>Tồn kho: {product && product.stock}
+                                            </span>
+                                        </p>
+                                        <p>
+                                            <span>Giới tính: {product && product.gender === 'male' ? "Đàn ông" : "Phụ nữ"}
                                             </span>
                                         </p>
                                     </div>
                                     <div className="product-variants">
                                         <div className="produt-variants-size">
-                                            <label>Size</label>
+                                            <label>Cỡ</label>
                                             <select className="nice-select" onChange={(e) => set_size(e.target.value)}>
                                                 <option value="S">S</option>
                                                 <option value="M">M</option>
@@ -296,14 +300,14 @@ function Detail_Product(props) {
                                     <div className="single-add-to-cart">
                                         <form action="#" className="cart-quantity">
                                             <div className="quantity">
-                                                <label>Quantity</label>
+                                                <label>Số lượng</label>
                                                 <div className="cart-plus-minus">
                                                     <input className="cart-plus-minus-box" value={count} type="text" onChange={(e) => set_count(Number(e.target.value))} />
                                                     <div className="dec qtybutton" onClick={downCount}><i className="fa fa-angle-down"></i></div>
                                                     <div className="inc qtybutton" onClick={upCount}><i className="fa fa-angle-up"></i></div>
                                                 </div>
                                             </div>
-                                            <a href="#" className="add-to-cart" type="submit" onClick={handler_addcart}>Add to cart</a>
+                                            <a href="#" className="add-to-cart" type="submit" onClick={handler_addcart}>Thêm vào giỏ hàng</a>
                                         </form>
                                     </div>
                                 </div>
@@ -319,8 +323,8 @@ function Detail_Product(props) {
                         <div className="col-lg-12">
                             <div className="li-product-tab">
                                 <ul className="nav li-product-menu">
-                                    <li><a className="active" data-toggle="tab" href="#description"><span>Description</span></a></li>
-                                    <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
+                                    <li><a className="active" data-toggle="tab" href="#description"><span>Mô tả</span></a></li>
+                                    <li><a data-toggle="tab" href="#reviews"><span>Đánh giá</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -328,7 +332,7 @@ function Detail_Product(props) {
                     <div className="tab-content">
                         <div id="description" className="tab-pane active show" role="tabpanel">
                             <div className="product-description">
-                                <span>The best is yet to come! Give your walls a voice with a framed poster. This aesthethic, optimistic poster will look great in your desk or in an open-space office. Painted wooden frame with passe-partout for more depth.</span>
+                                <span>{product && product.describe}</span>
                             </div>
                         </div>
                         <div id="reviews" className="tab-pane" role="tabpanel">
@@ -354,21 +358,21 @@ function Detail_Product(props) {
                                     </div>
 
                                     <div className="review-btn" style={{ marginTop: '2rem' }}>
-                                        <a className="review-links" style={{ cursor: 'pointer', color: '#fff' }} onClick={() => set_modal(true)}>Write Your Review!</a>
+                                        <a className="review-links" style={{ cursor: 'pointer', color: '#fff' }} onClick={() => set_modal(true)}>Viết đánh giá của bạn!</a>
                                     </div>
                                     <Modal onHide={() => set_modal(false)} show={modal} className="modal fade modal-wrapper">
                                         <div className="modal-dialog modal-dialog-centered" role="document">
                                             <div className="modal-content">
                                                 <div className="modal-body">
-                                                    <h3 className="review-page-title">Write Your Review</h3>
+                                                    <h3 className="review-page-title">Viết đánh giá của bạn</h3>
                                                     <div className="modal-inner-area row">
                                                         <div className="col-lg-6">
                                                             <div className="li-review-product">
                                                                 <img src={`http://localhost:8000${product.image}`} alt="Li's Product" style={{ width: '20rem' }} />
                                                                 <div className="li-review-product-desc">
-                                                                    <p className="li-product-name">Today is a good day Framed poster</p>
+                                                                    <p className="li-product-name">{product.name_product}</p>
                                                                     <p>
-                                                                        <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Design </span>
+                                                                        <span>{product.describe} </span>
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -377,10 +381,10 @@ function Detail_Product(props) {
                                                             <div className="li-review-content">
                                                                 <div className="feedback-area">
                                                                     <div className="feedback">
-                                                                        <h3 className="feedback-title">Our Feedback</h3>
+                                                                        <h3 className="feedback-title">Nhận Xét Của Tôi</h3>
                                                                         <form action="#">
                                                                             <p className="your-opinion">
-                                                                                <label>Your Rating</label>
+                                                                                <label>Sao đánh giá</label>
                                                                                 <span>
                                                                                     <select className="star-rating" onChange={(e) => set_star(e.target.value)}>
                                                                                         <option value="1">1</option>
@@ -392,16 +396,16 @@ function Detail_Product(props) {
                                                                                 </span>
                                                                             </p>
                                                                             <p className="feedback-form">
-                                                                                <label htmlFor="feedback">Your Review</label>
+                                                                                <label htmlFor="feedback">Nhận xét của bạn</label>
                                                                                 <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true" onChange={(e) => set_comment(e.target.value)}></textarea>
                                                                                 {
-                                                                                    validation_comment && <span style={{ color: 'red' }}>* This is required!</span>
+                                                                                    validation_comment && <span style={{ color: 'red' }}>* Yêu cầu!</span>
                                                                                 }
                                                                             </p>
                                                                             <div className="feedback-input">
                                                                                 <div className="feedback-btn pb-15">
-                                                                                    <a className="close" onClick={() => set_modal(false)}>Close</a>
-                                                                                    <a style={{ cursor: 'pointer' }} onClick={handler_Comment}>Submit</a>
+                                                                                    <a className="close" onClick={() => set_modal(false)}>Đóng</a>
+                                                                                    <a style={{ cursor: 'pointer' }} onClick={handler_Comment}>Nhận xét</a>
                                                                                 </div>
                                                                             </div>
                                                                         </form>

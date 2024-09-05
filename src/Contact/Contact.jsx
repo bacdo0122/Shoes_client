@@ -12,8 +12,8 @@ function Contact(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><a href="/">Home</a></li>
-                            <li className="active">Contact</li>
+                            <li><a href="/">Trang chủ</a></li>
+                            <li className="active">Liên hệ</li>
                         </ul>
                     </div>
                 </div>

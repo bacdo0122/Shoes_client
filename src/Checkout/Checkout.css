@@ -49,7 +49,7 @@ ul:not(.add_actions ul, .rating-box ul, .header-top ul, .hb-menu ul, .paginatoin
 .product_desc{
   padding: 10px;
 }
-li:not(.add_actions li, .rating-box li, .header-top li, .hb-menu li, .paginatoin-area li) {
+li:not(.add_actions li, .rating-box li, .header-top li, .hb-menu li, .paginatoin-area li, .rating li, .nav.li-product-menu li) {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
   display: flex;

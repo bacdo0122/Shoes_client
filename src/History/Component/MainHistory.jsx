@@ -77,8 +77,8 @@ function MainHistory(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li className="active">History</li>
+                            <li><Link to="/">Trang chủ</Link></li>
+                            <li className="active">Lịch sử</li>
                         </ul>
                     </div>
                 </div>

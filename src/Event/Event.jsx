@@ -42,8 +42,8 @@ function Event(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li className="active">Event</li>
+                            <li><a href="index.html">Trang chủ</a></li>
+                            <li className="active">Sự kiện</li>
                         </ul>
                     </div>
                 </div>

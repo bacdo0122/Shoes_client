@@ -80,8 +80,8 @@ function SignIn(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li className="active">Login</li>
+                            <li><Link to="/">Trang chủ</Link></li>
+                            <li className="active">Đăng nhập</li>
                         </ul>
                     </div>
                 </div>

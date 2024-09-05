@@ -128,8 +128,8 @@ function Shop(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li className="active">Shop</li>
+                            <li><a href="index.html">Trang chủ</a></li>
+                            <li className="active">Cửa hàng</li>
                         </ul>
                     </div>
                 </div>

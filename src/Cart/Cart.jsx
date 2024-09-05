@@ -270,8 +270,8 @@ function Cart(props) {
                 <div className="container">
                     <div className="breadcrumb-content">
                         <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li className="active">Shopping Cart</li>
+                            <li><Link to="/">Trang chủ</Link></li>
+                            <li className="active">Giỏ hàng</li>
                         </ul>
                     </div>
                 </div>
