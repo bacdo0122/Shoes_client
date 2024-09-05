@@ -40,6 +40,10 @@ const Product = {
     get_search_list: (query) => {
         const url = `/api/Product/scoll/page${query}`
         return axiosClient.get(url)
+    },
+    updateProduct: (data) => {
+        const url = `/api/admin/Product/update`
+        return axiosClient.patch(url, data)
     }
 
 }

@@ -59,33 +59,42 @@ function Detail_Product(props) {
     const [show_success, set_show_success] = useState(false)
 
     const [size, set_size] = useState('S')
-
+    const [error_stock, set_error_stock] = useState(false)
     // Hàm này dùng để thêm vào giỏ hàng
     const handler_addcart = (e) => {
 
         e.preventDefault()
 
-        const data = {
-            id_cart: Math.random().toString(),
-            id_product: id,
-            name_product: product.name_product,
-            price_product: sale ? parseInt(sale.id_product.price_product) - ((parseInt(sale.id_product.price_product) * parseInt(sale.promotion)) / 100) : product.price_product,
-            count: count,
-            image: product.image,
-            size: size,
-            stock: product.stock
+        if(count >= product.stock){
+            set_error_stock(true);
+            setTimeout(() => {
+                set_error_stock(false)
+            }, 2000)
+        } else{
+
+            const data = {
+                id_cart: Math.random().toString(),
+                id_product: id,
+                name_product: product.name_product,
+                price_product: sale ? parseInt(sale.id_product.price_product) - ((parseInt(sale.id_product.price_product) * parseInt(sale.promotion)) / 100) : product.price_product,
+                count: count,
+                image: product.image,
+                size: size,
+                stock: product.stock
+            }
+    
+            CartsLocal.addProduct(data)
+    
+            const action_count_change = changeCount(count_change)
+            dispatch(action_count_change)
+    
+            set_show_success(true)
+    
+            setTimeout(() => {
+                set_show_success(false)
+            }, 1000)
         }
 
-        CartsLocal.addProduct(data)
-
-        const action_count_change = changeCount(count_change)
-        dispatch(action_count_change)
-
-        set_show_success(true)
-
-        setTimeout(() => {
-            set_show_success(false)
-        }, 1000)
 
     }
 
@@ -110,6 +119,8 @@ function Detail_Product(props) {
 
     // State thông báo lỗi comment
     const [error_comment, set_error_comment] = useState(false)
+
+
 
     const [star, set_star] = useState(1)
 
@@ -212,6 +223,17 @@ function Detail_Product(props) {
                     </div>
                 </div>
             }
+            {
+                 error_stock &&
+                 <div className="modal_success">
+                     <div className="group_model_success pt-3">
+                         <div className="text-center p-2">
+                             <i className="fa fa-bell fix_icon_bell" style={{ fontSize: '40px', color: '#fff', backgroundColor: '#f84545' }}></i>
+                         </div>
+                         <h4 className="text-center p-3" style={{ color: '#fff' }}>Số lượng bạn thêm vào giỏ hàng lớn hơn số lượng hàng tồn kho! Vui lòng kiểm tra lại!</h4>
+                     </div>
+                 </div>
+            }
 
 
             <div className="breadcrumb-area">
@@ -276,7 +298,7 @@ function Detail_Product(props) {
                                             <div className="quantity">
                                                 <label>Quantity</label>
                                                 <div className="cart-plus-minus">
-                                                    <input className="cart-plus-minus-box" value={count} type="text" onChange={(e) => set_count(e.target.value)} />
+                                                    <input className="cart-plus-minus-box" value={count} type="text" onChange={(e) => set_count(Number(e.target.value))} />
                                                     <div className="dec qtybutton" onClick={downCount}><i className="fa fa-angle-down"></i></div>
                                                     <div className="inc qtybutton" onClick={upCount}><i className="fa fa-angle-up"></i></div>
                                                 </div>

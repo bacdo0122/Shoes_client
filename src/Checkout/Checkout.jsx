@@ -7,6 +7,7 @@ import OrderAPI from '../API/OrderAPI';
 import CouponAPI from '../API/CouponAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCount } from '../Redux/Action/ActionCount';
+import Product from '../API/Product';
 // Các bước checkout: Giỏ hàng, Địa chỉ giao hàng, Thanh toán, Xác nhận
 function CheckoutPage() {
   const [step, setStep] = useState(1); // Bước hiện tại
@@ -46,7 +47,16 @@ function CheckoutPage() {
               size: item.size,
             })
 
+            await Product.updateProduct({
+              id: item.id_product,
+              name: item.name_product,
+              price: item.price_product,
+              stock: Number(item.stock - item.count)
+            })
+
           })
+
+          //tru stock cua product
         }
         if(coupon){
           await CouponAPI.updateCoupon(coupon._id,{
