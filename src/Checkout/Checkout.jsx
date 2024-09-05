@@ -5,6 +5,8 @@ import * as Yup from 'yup';
 import './Checkout.css'
 import OrderAPI from '../API/OrderAPI';
 import CouponAPI from '../API/CouponAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeCount } from '../Redux/Action/ActionCount';
 // Các bước checkout: Giỏ hàng, Địa chỉ giao hàng, Thanh toán, Xác nhận
 function CheckoutPage() {
   const [step, setStep] = useState(1); // Bước hiện tại
@@ -13,7 +15,8 @@ function CheckoutPage() {
   const cartItems = JSON.parse(localStorage.getItem('carts'));
   const coupon = JSON.parse(localStorage.getItem('coupon'));
   const userId = sessionStorage.getItem('id_user');
-  
+  const dispatch = useDispatch()
+  const count = useSelector(state => state.Count.isLoad)
   // Tính tổng giá trị giỏ hàng
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price_product * item.count, 0);
   const handleOrder = async () => {
@@ -53,9 +56,10 @@ function CheckoutPage() {
            describe: coupon.describe,
           })
         }
-
-        localStorage.removeItem("carts");
+        localStorage.setItem("carts", JSON.stringify([]));
         localStorage.removeItem("coupon");
+        const action_change_count = changeCount(count)
+        dispatch(action_change_count)
     } catch (error) { 
         console.log("err:", error)
     }
