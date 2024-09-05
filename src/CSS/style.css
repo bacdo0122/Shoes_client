@@ -1550,6 +1550,7 @@ textarea:focus {
 	position: absolute;
 	right: 0;
 	z-index: 9;
+	top: 100%;
 	border: 1px solid #e5e5e5;
 	padding: 20px;
 	width: 290px;

@@ -86,7 +86,7 @@ function Home_Gender(props) {
                     <div className="col-lg-12">
                         <div className="li-section-title">
                             <h2>
-                                <span>{gender}</span>
+                                <span>{gender === 'Male' ? "Đàn ông" : "Phụ nữ"}</span>
                             </h2>
                         </div>
                         <Slider {...settings}>

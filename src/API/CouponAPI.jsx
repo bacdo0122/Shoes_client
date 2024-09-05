@@ -7,9 +7,9 @@ const CouponAPI = {
         return axiosClient.get(url)
     },
 
-    updateCoupon: (id) => {
+    updateCoupon: (id, body) => {
         const url = `/api/admin/coupon/promotion/${id}`
-        return axiosClient.patch(url)
+        return axiosClient.patch(url, body)
     },
 
     getCoupons: (query) => {

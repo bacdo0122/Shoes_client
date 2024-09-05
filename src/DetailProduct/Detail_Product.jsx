@@ -73,6 +73,7 @@ function Detail_Product(props) {
             count: count,
             image: product.image,
             size: size,
+            stock: product.stock
         }
 
         CartsLocal.addProduct(data)

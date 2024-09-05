@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import './Checkout.css'
 import OrderAPI from '../API/OrderAPI';
+import CouponAPI from '../API/CouponAPI';
 // Các bước checkout: Giỏ hàng, Địa chỉ giao hàng, Thanh toán, Xác nhận
 function CheckoutPage() {
   const [step, setStep] = useState(1); // Bước hiện tại
@@ -11,15 +12,14 @@ function CheckoutPage() {
   // Giả lập dữ liệu giỏ hàng
   const cartItems = JSON.parse(localStorage.getItem('carts'));
   const coupon = JSON.parse(localStorage.getItem('coupon'));
-  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = sessionStorage.getItem('id_user');
   
   // Tính tổng giá trị giỏ hàng
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price_product * item.count, 0);
-  
   const handleOrder = async () => {
     try {
-        await OrderAPI.post_order({
-            id_user: '66cf6b39820e3f781e6a88a9',
+        const order = await OrderAPI.post_order({
+            id_user: userId,
             id_payment:  formik.values.paymentMethod === 'creditCard' ? '66cf9736a49547331ee1f38e' : '66cf978da49547331ee1f38f',
             address: formik.values.address,
             name: formik.values.fullName,
@@ -28,9 +28,34 @@ function CheckoutPage() {
             status: '1',
             pay:  formik.values.paymentMethod === 'creditCard' ? true : false ,
             feeship: 150,
-            id_coupon: coupon._id,
+            id_coupon: coupon ? coupon.id : "",
             create_time: Date.now()
         })
+        if(order){
+          ///api/DetailOrder
+          cartItems.map(async (item) => {
+            await OrderAPI.post_detail_order({
+              id_order: order._id,
+              id_product: item.id_product,
+              name_product: item.name_product,
+              price_product: item.price_product,
+              count: Number(item.count),
+              size: item.size,
+            })
+
+          })
+        }
+        if(coupon){
+          await CouponAPI.updateCoupon(coupon._id,{
+           code: coupon.code,
+           count: Number(coupon.count) - 1,
+           promotion: coupon.promotion,
+           describe: coupon.describe,
+          })
+        }
+
+        localStorage.removeItem("carts");
+        localStorage.removeItem("coupon");
     } catch (error) { 
         console.log("err:", error)
     }
@@ -42,7 +67,7 @@ function CheckoutPage() {
       address: '',
       city: '',
       phone: '',
-      paymentMethod: '',
+      paymentMethod: 'cod',
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Vui lòng nhập họ tên'),
@@ -123,7 +148,12 @@ function CheckoutPage() {
           {formik.errors.phone && <p>{formik.errors.phone}</p>}
           
           <button type="button" onClick={() => setStep(1)}>Quay lại</button>
-          <button type="submit" onClick={() => setStep(3)}>Tiếp tục</button>
+          <button type="submit" onClick={() => {
+            if(formik.values.fullName && formik.values.address && formik.values.city &&  formik.values.phone){
+              setStep(3)
+
+            }
+          }}>Tiếp tục</button>
         </form>
       )}
 
@@ -131,6 +161,7 @@ function CheckoutPage() {
         <div className="payment-method">
           <h2>Phương thức thanh toán</h2>
           <div>
+            <label htmlFor="cod">Thanh toán khi nhận hàng (COD)</label>
             <input
               type="radio"
               id="cod"
@@ -139,9 +170,9 @@ function CheckoutPage() {
               onChange={formik.handleChange}
               checked={formik.values.paymentMethod === 'cod'}
             />
-            <label htmlFor="cod">Thanh toán khi nhận hàng (COD)</label>
           </div>
           <div>
+            <label htmlFor="creditCard">Thanh toán bằng thẻ tín dụng</label>
             <input
               type="radio"
               id="creditCard"
@@ -150,7 +181,6 @@ function CheckoutPage() {
               onChange={formik.handleChange}
               checked={formik.values.paymentMethod === 'creditCard'}
             />
-            <label htmlFor="creditCard">Thanh toán bằng thẻ tín dụng</label>
           </div>
           {formik.errors.paymentMethod && <p>{formik.errors.paymentMethod}</p>}
           

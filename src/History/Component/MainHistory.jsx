@@ -93,14 +93,14 @@ function MainHistory(props) {
                                     <table className="table">
                                         <thead>
                                             <tr>
-                                                <th className="li-product-remove">ID Invoice</th>
-                                                <th className="li-product-thumbnail">Name</th>
-                                                <th className="cart-product-name">Phone</th>
-                                                <th className="li-product-price">Address</th>
-                                                <th className="li-product-quantity">Total</th>
-                                                <th className="li-product-subtotal">Payment</th>
-                                                <th className="li-product-subtotal">Status</th>
-                                                <th className="li-product-subtotal">Cancel</th>
+                                                <th className="li-product-remove">Mã đơn hàng</th>
+                                                <th className="li-product-thumbnail">Tên</th>
+                                                <th className="cart-product-name">Số điện thoại</th>
+                                                <th className="li-product-price">Địa chỉ</th>
+                                                <th className="li-product-quantity">Tổng</th>
+                                                <th className="li-product-subtotal">Thanh toán</th>
+                                                <th className="li-product-subtotal">Tình trạng</th>
+                                                <th className="li-product-subtotal">Hủy</th>
                                             </tr>
                                         </thead>
                                         <tbody>

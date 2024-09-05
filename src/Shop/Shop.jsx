@@ -147,13 +147,13 @@ function Shop(props) {
                                     </div>
                                 </div>
                                 <div className="li-blog-sidebar pt-25">
-                                    <h4 className="li-blog-sidebar-title">All Product</h4>
+                                    <h4 className="li-blog-sidebar-title">Tất cả sản phẩm</h4>
                                     <ul className="li-blog-archive">
-                                        <li><Link to="/shop/all" style={id === 'all' ? { cursor: 'pointer', color: '#fed700' } : { cursor: 'pointer' }}>All</Link></li>
+                                        <li><Link to="/shop/all" style={id === 'all' ? { cursor: 'pointer', color: '#fed700' } : { cursor: 'pointer' }}>Tất cả</Link></li>
                                     </ul>
                                 </div>
                                 <div className="li-blog-sidebar pt-25 123" style={{ marginBottom: "20px" }}>
-                                    <h4 className="li-blog-sidebar-title" >Male</h4>
+                                    <h4 className="li-blog-sidebar-title" >Đàn ông</h4>
                                     <ul className="li-blog-archive">
                                         {
                                             male && male.map(value => (
@@ -165,7 +165,7 @@ function Shop(props) {
                                     </ul>
                                 </div>
                                 <div className="li-blog-sidebar">
-                                <h4 className="li-blog-sidebar-title" >Female</h4>
+                                <h4 className="li-blog-sidebar-title" >Phụ nữ</h4>
                                     <ul className="li-blog-archive">
                                         {
                                             female && female.map(value => (
@@ -182,11 +182,11 @@ function Shop(props) {
                             <div className="shop-top-bar">
                                 <div className="product-select-box">
                                     <div className="product-short">
-                                        <p>Sort By:</p>
+                                        <p>Sắp xếp theo:</p>
                                         <select className="nice-select" onChange={handleSortBy}>
-                                            <option value="all">Relevance</option>
-                                            <option value="lowToHight">Price (Low &gt; High)</option>
-                                            <option value="highToLow">Price (High &gt; Low)</option>
+                                            <option value="all">Liên quan</option>
+                                            <option value="lowToHight">Giá (Thấp &gt; Cao)</option>
+                                            <option value="highToLow">Giá (Cao &gt; Thấp)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@ function Shop(props) {
                                     <div className="paginatoin-area">
                                         <div className="row">
                                             <div className="col-lg-6 col-md-6">
-                                                <p>Showing {pagination.count * (pagination.page - 1) + 1}-{(pagination.page - 1) * (pagination.count) + products.length} of {totalProducts } item(s)</p>
+                                                <p>Hiển thị {pagination.count * (pagination.page - 1) + 1}-{(pagination.page - 1) * (pagination.count) + products.length} của {totalProducts } sản phẩm</p>
                                             </div>
                                             <Pagination pagination={pagination} handlerChangePage={handlerChangePage} totalPage={totalPage} />
                                         </div>

@@ -47,21 +47,27 @@ function Cart(props) {
     }
 
     // Hàm này dùng để tăng số lượng
-    const upCount = (count, id_cart) => {
+    const upCount = (count, id_cart, value) => {
 
         const data = {
             id_cart: id_cart,
             count: parseInt(count) + 1
         }
 
-        console.log(data)
+        if(value.stock < data.count){
+            set_show_over_stock_cart(true)
+        } else{ 
 
+            CartsLocal.updateProduct(data)
+    
+            const action_change_count = changeCount(count_change)
+            dispatch(action_change_count)
+        }
 
+        setTimeout(() => {
+            set_show_over_stock_cart(false)
+        }, 1500)
 
-        CartsLocal.updateProduct(data)
-
-        const action_change_count = changeCount(count_change)
-        dispatch(action_change_count)
 
     }
 
@@ -77,13 +83,34 @@ function Cart(props) {
             count: parseInt(count) - 1
         }
 
-        console.log(data)
-
         CartsLocal.updateProduct(data)
 
         const action_change_count = changeCount(count_change)
         dispatch(action_change_count)
 
+        
+
+    }
+
+    const handleChangeQuantity = (e,  id_cart, value) => {
+       const data = {
+        id_cart: id_cart,
+        count: e.target.value
+       }
+
+       if(value.stock < data.count){
+        set_show_over_stock_cart(true)
+    } else{ 
+
+        CartsLocal.updateProduct(data)
+
+        const action_change_count = changeCount(count_change)
+        dispatch(action_change_count)
+    }
+
+        setTimeout(() => {
+            set_show_over_stock_cart(false)
+        }, 1500)
     }
 
     // Hàm này dùng để xóa giỏ hàng
@@ -102,6 +129,8 @@ function Cart(props) {
     const [show_error, set_show_error] = useState(false)
 
     const [show_null_cart, set_show_null_cart] = useState(false)
+
+    const [show_over_stock_cart, set_show_over_stock_cart] = useState(false)
 
     const handler_checkout = () => {
 
@@ -225,6 +254,17 @@ function Cart(props) {
                     </div>
                 </div>
             }
+            {
+                show_over_stock_cart && 
+                <div className="modal_success">
+                    <div className="group_model_success pt-3">
+                        <div className="text-center p-2">
+                            <i className="fa fa-bell fix_icon_bell" style={{ fontSize: '40px', color: '#fff', backgroundColor: '#f84545' }}></i>
+                        </div>
+                        <h4 className="text-center p-3" style={{ color: '#fff' }}>Vui Lòng Kiểm Tra Số Lượng Tồn Kho Của Sản Phẩm!</h4>
+                    </div>
+                </div>
+            }
 
             <div className="breadcrumb-area">
                 <div className="container">
@@ -246,13 +286,13 @@ function Cart(props) {
                                     <table className="table">
                                         <thead>
                                             <tr>
-                                                <th className="li-product-remove">remove</th>
-                                                <th className="li-product-thumbnail">images</th>
-                                                <th className="cart-product-name">Product</th>
-                                                <th className="li-product-price">Price</th>
-                                                <th className="li-product-price">Size</th>
-                                                <th className="li-product-quantity">Quantity</th>
-                                                <th className="li-product-subtotal">Total</th>
+                                                <th className="li-product-remove">Xóa</th>
+                                                <th className="li-product-thumbnail">Ảnh</th>
+                                                <th className="cart-product-name">Sản phẩm</th>
+                                                <th className="li-product-price">Giá</th>
+                                                <th className="li-product-price">Loại hình</th>
+                                                <th className="li-product-quantity">Số lượng</th>
+                                                <th className="li-product-subtotal">Tổng</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -269,9 +309,9 @@ function Cart(props) {
                                                         <td className="quantity">
                                                             <label>Quantity</label>
                                                             <div className="cart-plus-minus">
-                                                                <input className="cart-plus-minus-box" value={value.count} type="text" />
-                                                                <div className="dec qtybutton" onClick={() => downCount(value.count, value.id_cart)}><i className="fa fa-angle-down"></i></div>
-                                                                <div className="inc qtybutton" onClick={() => upCount(value.count, value.id_cart)}><i className="fa fa-angle-up"></i></div>
+                                                                <input className="cart-plus-minus-box" value={value.count} type="text"  onChange={(e)=>handleChangeQuantity(e, value.id_cart, value)}/>
+                                                                <div className="dec qtybutton" onClick={() => downCount(value.count, value.id_cart, value)}><i className="fa fa-angle-down"></i></div>
+                                                                <div className="inc qtybutton" onClick={() => upCount(value.count, value.id_cart, value)}><i className="fa fa-angle-up"></i></div>
                                                             </div>
                                                         </td>
                                                         <td className="product-subtotal"><span className="amount">{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(parseInt(value.price_product) * parseInt(value.count))+ ' VNĐ'}</span></td>
@@ -285,8 +325,8 @@ function Cart(props) {
                                     <div class="col-12">
                                         <div class="coupon-all">
                                             <div class="coupon">
-                                                <input id="coupon_code" class="input-text" onChange={(e) => set_coupon(e.target.value)} value={coupon} placeholder="Coupon code" type="text" /> &nbsp;
-                                                <input class="button" value="Apply coupon" type="submit" onClick={handlerCoupon} />
+                                                <input id="coupon_code" class="input-text" onChange={(e) => set_coupon(e.target.value)} value={coupon} placeholder="Mã khuyến mãi" type="text" /> &nbsp;
+                                                <input class="button" value="Áp dụng" type="submit" onClick={handlerCoupon} />
                                             </div>
                                         </div>
                                     </div>
@@ -294,13 +334,13 @@ function Cart(props) {
                                 <div className="row">
                                     <div className="col-md-5 ml-auto">
                                         <div className="cart-page-total">
-                                            <h2>Cart totals</h2>
+                                            <h2>Tổng</h2>
                                             <ul>
-                                                <li>Sub Total <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(total_price) + ' VNĐ'}</span></li>
-                                                <li>Discount <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(discount) + ' VNĐ'}</span></li>
-                                                <li>Total <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(new_price) + ' VNĐ'}</span></li>
+                                                <li>Tổng phụ <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(total_price) + ' VNĐ'}</span></li>
+                                                <li>Khuyến mãi <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(discount) + ' VNĐ'}</span></li>
+                                                <li>Tổng <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(new_price) + ' VNĐ'}</span></li>
                                             </ul>
-                                            <a style={{ color: '#fff', cursor: 'pointer', fontWeight: '600' }} onClick={handler_checkout}>Proceed to checkout</a>
+                                            <a style={{ color: '#fff', cursor: 'pointer', fontWeight: '600' }} onClick={handler_checkout}>Tiến trình sang checkout</a>
                                         </div>
                                     </div>
                                 </div>

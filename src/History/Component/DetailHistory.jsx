@@ -36,15 +36,15 @@ function DetailHistory(props) {
         fetchData()
 
     }, [])
-
+    console.log("order:", order)
     return (
         <div>
             <div className="container" style={{ paddingTop: '3rem' }}>
                 <h1>Thông Tin Chi Tiết Đơn Hàng</h1>
                 <ul>
                     <li style={{ fontSize: '1.1rem' }}>ID Invoice: <span>{order._id}</span></li>
-                    <li style={{ fontSize: '1.1rem' }}>Phone: <span>{order.id_note && order.id_note.phone}</span></li>
-                    <li style={{ fontSize: '1.1rem' }}>Fullname: <span>{order.id_note && order.id_note.fullname}</span></li>
+                    <li style={{ fontSize: '1.1rem' }}>Phone: <span>{order && order.phone}</span></li>
+                    <li style={{ fontSize: '1.1rem' }}>Fullname: <span>{order && order.name}</span></li>
                     <li style={{ fontSize: '1.1rem' }}>Total: <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(order.total) + ' VNĐ'}</span></li>
                     <li style={{ fontSize: '1.1rem' }}>Feeship: <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(order.feeship) + ' VNĐ'}</span></li>
                     <li style={{ fontSize: '1.1rem' }}>Payment: <span>{order.id_payment && order.id_payment.pay_name}</span></li>

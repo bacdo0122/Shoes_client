@@ -92,8 +92,13 @@ form p {
 
 .payment-method div {
   margin-bottom: 15px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
+.payment-method label{
+  width: 60%;
+}
 .order-confirmation p {
   font-size: 16px;
   color: #333;

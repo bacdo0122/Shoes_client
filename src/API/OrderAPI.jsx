@@ -6,6 +6,10 @@ const OrderAPI = {
         const url = `/api/Payment/order`
         return axiosClient.post(url, data)
     },
+    post_detail_order: (data) => {
+        const url = `/api/DetailOrder`
+        return axiosClient.post(url, data)
+    },
 
     get_order: (id) => {
         const url = `/api/Payment/order/${id}`

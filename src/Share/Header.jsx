@@ -120,9 +120,8 @@ function Header(props) {
 
     // Hàm này là hàm con chia ra để xử lý
     function showData(carts, sum, price) {
-
         carts.map(value => {
-            sum += value.count
+            sum += Number(value.count)
             price += parseInt(value.price_product) * parseInt(value.count)
         })
 
@@ -230,13 +229,29 @@ function Header(props) {
 
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy các phần tử
+        var viewFullCartButton = document.getElementById('view-full-cart');
+        var collapseCarts = document.getElementById('collapse_carts');
+        
+        // Kiểm tra nếu các phần tử tồn tại
+        console.log(viewFullCartButton, collapseCarts)
+        if (viewFullCartButton && collapseCarts) {
+            // Thêm sự kiện click cho nút "View Full Cart"
+            viewFullCartButton.addEventListener('click', function() {
+                // Đóng phần tử collapse_carts
+                collapseCarts.classList.remove('show'); // Giả sử class 'show' là lớp dùng để hiển thị phần tử collapse
+            });
+        }
+    });
+
     return (
         <header>
             <div className="header-top">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-4">
-                            <li><span>Telephone Enquiry:</span><a href="#">(+123) 123 321 345</a></li>
+                            <li><span>Điện thoại:</span><a href="#">(+123) 123 321 345</a></li>
                         </div>
                         <div className="col-lg-9 col-md-8">
                             <ul className="d-flex justify-content-end" >
@@ -260,13 +275,13 @@ function Header(props) {
                                     <div className="ul_setting">
                                         {active_user ? (
                                             <ul className="setting_ul collapse" id="collapseExample">
-                                                <li className="li_setting"><Link to={`/profile/${sessionStorage.getItem("id_user")}`}>Profile</Link></li>
-                                                <li className="li_setting"><Link to="/history">Order Status</Link></li>
-                                                <li className="li_setting"><a onClick={handler_logout} href="#">Log Out</a></li>
+                                                <li className="li_setting"><Link to={`/profile/${sessionStorage.getItem("id_user")}`}>Thông tin</Link></li>
+                                                <li className="li_setting"><Link to="/history">Tình trạng đơn hàng</Link></li>
+                                                <li className="li_setting"><a onClick={handler_logout} href="#">Đăng xuất</a></li>
                                             </ul>
                                         ) : (
                                             <ul className="setting_ul collapse" id="collapseExample">
-                                                <li className="li_setting"><Link to="/signin">Sign In</Link></li>
+                                                <li className="li_setting"><Link to="/signin">Đăng nhập</Link></li>
                                             </ul>
                                         )}
 
@@ -289,7 +304,7 @@ function Header(props) {
                         </div>
                         <div className="col-lg-9 pl-0 ml-sm-15 ml-xs-15 d-flex justify-content-between">
                             <form action="/search" className="hm-searchbox" onSubmit={handler_search}>
-                                <input type="text" placeholder="Enter your search key ..." value={keyword_search} onChange={(e) => set_keyword_search(e.target.value)} />
+                                <input type="text" placeholder="Nhập tên sản phẩm muốn tìm ..." value={keyword_search} onChange={(e) => set_keyword_search(e.target.value)} />
                                 <button className="li-btn" type="submit"><i className="fa fa-search"></i></button>
                                 {
                                     keyword_search && <div className="show_search_product">
@@ -346,7 +361,7 @@ function Header(props) {
                                                 </ul>
                                                 <p className="minicart-total">SUBTOTAL: <span>{new Intl.NumberFormat('vi-VN',{style: 'decimal',decimal: 'VND'}).format(total_price)+ ' VNĐ'}</span></p>
                                                 <div className="minicart-button">
-                                                    <Link to="/cart" className="li-button li-button-fullwidth li-button-dark">
+                                                    <Link to="/cart" className="li-button li-button-fullwidth li-button-dark" id="view-full-cart">
                                                         <span>View Full Cart</span>
                                                     </Link>
                                                 </div>
@@ -366,10 +381,10 @@ function Header(props) {
                                     <nav>
                                         <ul>
 
-                                            <li className="dropdown-holder"><Link to="/">Home</Link></li>
-                                            <li className="megamenu-holder"><Link to="/shop/all">Menu</Link>
+                                            <li className="dropdown-holder"><Link to="/">Trang chủ</Link></li>
+                                            <li className="megamenu-holder"><Link to="/shop/all">Thể loại</Link>
                                                 <ul class="megamenu hb-megamenu">
-                                                    <li><h4>Male</h4>
+                                                    <li><h4>Đàn ông</h4>
                                                         <ul>
                                                             {
                                                                 male && male.map(value => (
@@ -380,7 +395,7 @@ function Header(props) {
                                                             }
                                                         </ul>
                                                     </li>
-                                                    <li><h4>Female</h4>
+                                                    <li><h4>Phụ nữ</h4>
                                                         <ul>
                                                             {
                                                                 female && female.map(value => (
@@ -393,8 +408,8 @@ function Header(props) {
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li><Link to="/event">Event</Link></li>
-                                            <li><Link to="/contact">Contact</Link></li>
+                                            <li><Link to="/event">Sự kiện</Link></li>
+                                            <li><Link to="/contact">Liên hệ</Link></li>
                                         </ul>
 
                                     </nav>

@@ -79,7 +79,7 @@ function Home_Category(props) {
                     <div className="col-lg-12">
                         <div className="li-product-tab">
                             <ul className="nav li-product-menu">
-                                <li><a className="active" data-toggle="tab" href="#"><span>Sale</span></a></li>
+                                <li><a className="active" data-toggle="tab" href="#"><span>Giảm Giá</span></a></li>
                             </ul>
                         </div>
                     </div>

@@ -80,7 +80,7 @@ function Profile(props) {
                             onClick={() => handler_Status('edit_profile')}>
 
                             <a className={edit_status === 'edit_profile' ? 'a_setting_active' : ''}
-                                style={{ fontSize: '1.1rem' }}>Edit Profile</a>
+                                style={{ fontSize: '1.1rem' }}>Sửa thông tin cá nhân</a>
 
                         </div>
 
@@ -88,7 +88,7 @@ function Profile(props) {
                             onClick={() => handler_Status('change_password')}>
 
                             <a className={edit_status === 'change_password' ? 'a_setting_active' : ''}
-                                style={{ fontSize: '1.1rem' }}>Change Password</a>
+                                style={{ fontSize: '1.1rem' }}>Đổi mật khẩu</a>
 
                         </div>
                     </div>
@@ -125,7 +125,7 @@ function Profile(props) {
                                     </div> */}
                                     <div className="txt_setting_edit pt-3 pb-2">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <span style={{ fontWeight: '600' }}>Name</span>
+                                            <span style={{ fontWeight: '600' }}>Họ Tên</span>
                                         </div>
                                         <div>
                                             <input className="txt_input_edit" type="text" value={name}
@@ -134,7 +134,7 @@ function Profile(props) {
                                     </div>
                                     <div className="txt_setting_edit pt-3 pb-2">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <span style={{ fontWeight: '600' }}>Username</span>
+                                            <span style={{ fontWeight: '600' }}>Tên tài khoản</span>
                                         </div>
                                         <div>
                                             <input className="txt_input_edit" type="text" value={username}
@@ -151,14 +151,14 @@ function Profile(props) {
                                         </div>
                                     </div>
                                     <div className="d-flex justify-content-center pt-3 pb-4">
-                                        <button className="btn btn-secondary" onClick={handler_update}>Submit</button>
+                                        <button className="btn btn-secondary" onClick={handler_update}>Sửa</button>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="setting_change_password">
                                     <div className="txt_setting_edit pt-3 pb-2">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <span style={{ fontWeight: '600' }}>Old Password</span>
+                                            <span style={{ fontWeight: '600' }}>Mật khẩu cũ</span>
                                         </div>
                                         <div>
                                             <input className="txt_input_edit" type="password" value={password}
@@ -167,7 +167,7 @@ function Profile(props) {
                                     </div>
                                     <div className="txt_setting_edit pt-3 pb-2">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <span style={{ fontWeight: '600' }} >New Password</span>
+                                            <span style={{ fontWeight: '600' }} >Mật khẩu mới</span>
                                         </div>
                                         <div>
                                             <input className="txt_input_edit" type="password" value={new_password}
@@ -176,7 +176,7 @@ function Profile(props) {
                                     </div>
                                     <div className="txt_setting_edit pt-3 pb-2">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <span style={{ fontWeight: '600' }}>Confirm New Password</span>
+                                            <span style={{ fontWeight: '600' }}>Xác nhận mật khẩu mới</span>
                                         </div>
                                         <div>
                                             <input className="txt_input_edit" type="password" value={compare_password}
@@ -184,7 +184,7 @@ function Profile(props) {
                                         </div>
                                     </div>
                                     <div className="d-flex justify-content-center pt-3 pb-4 align-items-center">
-                                        <button className="btn btn-secondary" onClick={handler_update}>Change Password</button>
+                                        <button className="btn btn-secondary" onClick={handler_update}>Đổi mật khẩu</button>
                                     </div>
                                 </div>
                             )

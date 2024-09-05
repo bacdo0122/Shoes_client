@@ -27,11 +27,11 @@ function Favorite(props) {
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="li-product-remove">remove</th>
-                                                <th class="li-product-thumbnail">images</th>
-                                                <th class="cart-product-name">Product</th>
-                                                <th class="li-product-price">Unit Price</th>
-                                                <th class="li-product-stock-status">Stock Status</th>
+                                                <th class="li-product-remove">Xóa</th>
+                                                <th class="li-product-thumbnail">Ảnh</th>
+                                                <th class="cart-product-name">Sản phẩm</th>
+                                                <th class="li-product-price">Giá</th>
+                                                <th class="li-product-stock-status">Số lượng tồn kho</th>
                                                 <th class="li-product-add-cart">add to cart</th>
                                             </tr>
                                         </thead>

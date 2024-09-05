@@ -35,7 +35,7 @@ function Search(props) {
 
     return (
         <form action="#">
-            <input type="text" className="li-search-field" placeholder="search here" value={search} onChange={onChangeText} />
+            <input type="text" className="li-search-field" placeholder="tìm kiếm tại đây" value={search} onChange={onChangeText} />
             <button type="submit" className="li-search-btn"  onClick={onClick}><i className="fa fa-search"></i></button>
         </form>
     );
